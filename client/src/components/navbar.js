@@ -1,0 +1,31 @@
+import React from "react";
+import Grid from "@mui/material/Grid/Grid";
+import Box from "@mui/material/Box";
+
+function NavBar(props) {
+  const { address } = props;
+  return (
+    <Box
+      sx={{
+        height: "5%",
+        backgroundColor: "#00008B",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        style={{ color: "white", padding: "0 5px" }}
+      >
+        <Grid item>PrimalSwap</Grid>
+        <Grid item>{address}</Grid>
+      </Grid>
+    </Box>
+  );
+}
+
+export default NavBar;
