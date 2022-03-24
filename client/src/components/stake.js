@@ -37,6 +37,8 @@ function Stake(props) {
     setData(newData);
   };
 
+  const mediaQuery = window.matchMedia("(max-width: 600px)");
+
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,7 +56,7 @@ function Stake(props) {
       }}
     >
       <Typography
-        variant="h4"
+        variant={mediaQuery.matches ? "h6" : "h4"}
         style={{ color: "#00008B", marginBottom: "5px" }}
       >
         Stake tokens and earn weekly
@@ -91,8 +93,7 @@ function Stake(props) {
                     color: "green",
                   }}
                 >
-                  You will get a reward of {parseInt(input) / 100} PRI every
-                  week
+                  You will get a reward of {Number(input) / 100} PRI every week
                 </Typography>
               </Grid>
             </Grid>
@@ -106,7 +107,7 @@ function Stake(props) {
                 width: "100%",
               }}
               onClick={() => {
-                const _stake = parseInt(input);
+                const _stake = Number(input);
                 methods
                   .createStake(_stake)
                   .send({ from: address })
@@ -159,7 +160,7 @@ function Stake(props) {
         Number of Stakeholders : {data.stakeHolders}
       </Typography>
       <Typography
-        variant="h5"
+        variant={mediaQuery.matches ? "h6" : "h5"}
         style={{ color: "#00008B", marginBottom: "18px" }}
       >
         Total PMT staked(All users) : {data.totalStake} PRI

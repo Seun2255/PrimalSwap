@@ -4,6 +4,9 @@ import Box from "@mui/material/Box";
 
 function NavBar(props) {
   const { address } = props;
+
+  const mediaQuery = window.matchMedia("(max-width: 600px)");
+
   return (
     <Box
       sx={{
@@ -17,12 +20,12 @@ function NavBar(props) {
       <Grid
         container
         direction="row"
-        justifyContent="space-between"
+        justifyContent={mediaQuery.matches ? "center" : "space-between"}
         alignItems="center"
         style={{ color: "white", padding: "0 5px" }}
       >
         <Grid item>PrimalSwap</Grid>
-        <Grid item>{address}</Grid>
+        {!mediaQuery.matches && <Grid item>{address}</Grid>}
       </Grid>
     </Box>
   );

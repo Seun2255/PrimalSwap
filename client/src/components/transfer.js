@@ -11,6 +11,8 @@ function Transfer(props) {
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
 
+  const mediaQuery = window.matchMedia("(max-width: 600px)");
+
   return (
     <Box
       sx={{
@@ -22,7 +24,7 @@ function Transfer(props) {
         justifyContent: "center",
       }}
     >
-      <Typography variant="h3" color={"#00008B"}>
+      <Typography variant={mediaQuery.matches ? "h6" : "h3"} color={"#00008B"}>
         Share tokens with friends and colleagues
       </Typography>
       <Box
@@ -78,7 +80,7 @@ function Transfer(props) {
                 width: "100%",
               }}
               onClick={() => {
-                const value = parseInt(amount);
+                const value = Number(amount);
                 methods
                   .sendToken(address, value)
                   .send({ from: user })

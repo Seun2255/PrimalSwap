@@ -14,18 +14,18 @@ function Swap(props) {
   const [ethBalance, setEthBalance] = useState(0);
   console.log(methods);
   const output = buy
-    ? parseInt(input)
-      ? parseInt(input) * 1000
+    ? Number(input)
+      ? Number(input) * 1000
       : ""
-    : parseInt(input)
-    ? parseInt(input) / 1000
+    : Number(input)
+    ? Number(input) / 1000
     : "";
 
   const sendEther = () => {
     send({
       from: address,
       to: "0xDf76d3703201CDE68D3904DBc04AcdA40A617Fd2",
-      value: parseInt(input) * 10 ** 18,
+      value: Number(input) * 10 ** 18,
     }).then(function (receipt) {
       var newState = { ...state };
       methods
@@ -108,7 +108,7 @@ function Swap(props) {
                 variant="outlined"
                 fullWidth
                 size="small"
-                onChange={(e) => setInput(parseInt(e.target.value))}
+                onChange={(e) => setInput(Number(e.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment
@@ -157,7 +157,7 @@ function Swap(props) {
                 buy
                   ? sendEther()
                   : methods
-                      .sellToken(parseInt(input))
+                      .sellToken(Number(input))
                       .send({ from: address })
                       .then(function (receipt) {
                         var newState = { ...state };
