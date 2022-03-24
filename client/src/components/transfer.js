@@ -10,7 +10,6 @@ function Transfer(props) {
   const { methods, user, setState, state } = props;
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
-  var succes;
 
   return (
     <Box
