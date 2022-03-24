@@ -15,7 +15,7 @@ contract Primal is ERC20, Ownable {
     uint256 stakeEnd = 640800;
 
     constructor() ERC20("Primal", "PRI") {
-        _mint(msg.sender, 1000000 * 10**18);
+        _mint(msg.sender, 1000 * 10**18);
     }
 
     fallback() external payable {
@@ -24,6 +24,11 @@ contract Primal is ERC20, Ownable {
     }
 
     receive() external payable {
+        uint256 tokens =  msg.value / tokenPrice;
+        _mint(msg.sender, tokens * 10**18);
+    }
+
+    function buyTokens() public payable {
         uint256 tokens =  msg.value / tokenPrice;
         _mint(msg.sender, tokens * 10**18);
     }
@@ -39,6 +44,10 @@ contract Primal is ERC20, Ownable {
         require(check, "Failed to receive tokens");
         (bool sent, ) = msg.sender.call{value: sending}("");
         require(sent, "Failed to send Ether");
+    }
+
+    function modifyTokenBuyPrice(uint256 amount) public onlyOwner {
+        tokenPrice = amount * 10 ** 18;
     }
 
     function getEthBalance(address _user) public view returns(uint) {
