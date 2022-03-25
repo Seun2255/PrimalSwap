@@ -12,6 +12,11 @@ function Swap(props) {
   const [buy, setBuy] = useState(true);
   const [balance, setBalance] = useState(0);
   const [ethBalance, setEthBalance] = useState(0);
+
+  const toFixed_norounding = (n, p) => {
+    var result = n.toFixed(p);
+    return result <= n ? result : (result - Math.pow(0.1, p)).toFixed(p);
+  };
   const output = buy
     ? Number(input)
       ? Number(input) * 1000
@@ -24,8 +29,10 @@ function Swap(props) {
     var tempBalance = await methods.balanceOf(address).call();
     var tempEthBalance = await getEthBalance(address);
 
-    tempBalance = (tempBalance / 10 ** 18).toFixed(3);
-    tempEthBalance = (tempEthBalance / 10 ** 18).toFixed(3);
+    tempBalance = tempBalance / 10 ** 18;
+    tempBalance = toFixed_norounding(tempBalance, 3);
+    tempEthBalance = tempEthBalance / 10 ** 18;
+    tempEthBalance = toFixed_norounding(tempEthBalance, 3);
 
     setBalance(tempBalance);
     setEthBalance(tempEthBalance);
