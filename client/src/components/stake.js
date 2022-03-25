@@ -18,7 +18,7 @@ function Stake(props) {
     stakeHolders: 0,
     rewardTimeLeft: 0,
     rewardDue: false,
-    isStakeHolder: { 0: "cat", 1: "dog" },
+    isStakeHolder: { 0: false, 1: false },
   });
 
   const getData = async () => {
@@ -52,12 +52,14 @@ function Stake(props) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        paddingTop: "15px",
+        justifyContent: data.isStakeHolder["0"] ? "flex-start" : "center",
+        paddingTop: "50px",
+        paddingBottom: "50px",
       }}
     >
       <Typography
         variant={mediaQuery.matches ? "h6" : "h4"}
-        style={{ color: "#00008B", marginBottom: "5px" }}
+        style={{ color: "#00008B", marginBottom: "5px", marginTop: "10px" }}
       >
         Stake tokens and earn weekly
       </Typography>
@@ -120,6 +122,7 @@ function Stake(props) {
                         newState.balance = result;
                       });
                     setState(newState);
+                    setInput("");
                     getData();
                   });
               }}
@@ -131,7 +134,7 @@ function Stake(props) {
       </Box>
       {data.isStakeHolder["0"] && (
         <Typography
-          variant="h5"
+          variant={mediaQuery.matches ? "h6" : "h5"}
           style={{
             color: "#00008B",
             marginBottom: "18px",
@@ -143,7 +146,7 @@ function Stake(props) {
       )}
       {data.isStakeHolder["0"] && (
         <Typography
-          variant="h5"
+          variant={mediaQuery.matches ? "h6" : "h5"}
           style={{ color: "#00008B", marginBottom: "40px" }}
         >
           Reward due in{" "}
@@ -154,7 +157,7 @@ function Stake(props) {
         </Typography>
       )}
       <Typography
-        variant="h5"
+        variant={mediaQuery.matches ? "h6" : "h5"}
         style={{ color: "#00008B", marginBottom: "18px" }}
       >
         Number of Stakeholders : {data.stakeHolders}
@@ -166,7 +169,7 @@ function Stake(props) {
         Total PMT staked(All users) : {data.totalStake} PRI
       </Typography>
       <Typography
-        variant="h3"
+        variant={mediaQuery.matches ? "h5" : "h3"}
         style={{ color: "#00008B", marginBottom: "0px", marginTop: "20px" }}
       >
         Claim Rewards

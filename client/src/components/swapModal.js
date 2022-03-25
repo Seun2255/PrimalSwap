@@ -7,12 +7,11 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
 function Swap(props) {
-  var { methods, address, send, setState, state, getEthBalance } = props;
+  var { methods, address, setState, state, getEthBalance } = props;
   const [input, setInput] = useState("");
   const [buy, setBuy] = useState(true);
   const [balance, setBalance] = useState(0);
   const [ethBalance, setEthBalance] = useState(0);
-  console.log(methods);
   const output = buy
     ? Number(input)
       ? Number(input) * 1000
@@ -20,26 +19,6 @@ function Swap(props) {
     : Number(input)
     ? Number(input) / 1000
     : "";
-
-  const sendEther = () => {
-    send({
-      from: address,
-      to: "0xDf76d3703201CDE68D3904DBc04AcdA40A617Fd2",
-      value: Number(input) * 10 ** 18,
-    }).then(function (receipt) {
-      var newState = { ...state };
-      methods
-        .balanceOf(state.account)
-        .call()
-        .then(function (result) {
-          newState.balance = result;
-        });
-      state.getEthBalance(state.account).then(function (result) {
-        newState.ethBalance = result;
-      });
-      setState(newState);
-    });
-  };
 
   const getData = async () => {
     var tempBalance = await methods.balanceOf(address).call();
@@ -155,11 +134,10 @@ function Swap(props) {
               }}
               onClick={() => {
                 buy
-                  ? sendEther()
-                  : methods
-                      .sellToken(Number(input))
-                      .send({ from: address })
-                      .then(function (receipt) {
+                  ? methods
+                      .buyTokens()
+                      .send({ from: address, value: Number(input) * 10 ** 18 })
+                      .then(function () {
                         var newState = { ...state };
                         methods
                           .balanceOf(state.account)
@@ -173,8 +151,29 @@ function Swap(props) {
                             newState.ethBalance = result;
                           });
                         setState(newState);
+                        setInput(0);
+                        getData();
+                      })
+                  : methods
+                      .sellToken(Number(input))
+                      .send({ from: address })
+                      .then(function () {
+                        var newState = { ...state };
+                        methods
+                          .balanceOf(state.account)
+                          .call()
+                          .then(function (result) {
+                            newState.balance = result;
+                          });
+                        state
+                          .getEthBalance(state.account)
+                          .then(function (result) {
+                            newState.ethBalance = result;
+                          });
+                        setState(newState);
+                        setInput(0);
+                        getData();
                       });
-                getData();
               }}
             >
               Swap

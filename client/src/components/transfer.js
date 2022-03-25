@@ -24,7 +24,11 @@ function Transfer(props) {
         justifyContent: "center",
       }}
     >
-      <Typography variant={mediaQuery.matches ? "h6" : "h3"} color={"#00008B"}>
+      <Typography
+        variant={mediaQuery.matches ? "h6" : "h3"}
+        color={"#00008B"}
+        style={{ textAlign: "center" }}
+      >
         Share tokens with friends and colleagues
       </Typography>
       <Box
@@ -64,7 +68,7 @@ function Transfer(props) {
                       position="end"
                       sx={{ color: "#00008B", fontWeight: "500" }}
                     >
-                      PMT
+                      PRI
                     </InputAdornment>
                   ),
                 }}
